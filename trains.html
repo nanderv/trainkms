@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-    
     <body>
     <table>
         <tr><td>From</td><td><select id="fromStation"></select></td></tr>
@@ -86,22 +85,35 @@ function displayRoute(route){
     }
     return routeString + "<tr><td>"+stationMap[route.fromStation]+ "</td><td>" + stationMap[route.toStation]+"</td><td>"+ route.distance+"</td></tr>"
 }
+
 function populateSelectBox(optionsMap) {
   const selectBox = document.getElementById('fromStation'); // Replace 'mySelect' with the actual ID of your select box
   const selectBox2 = document.getElementById('toStation'); // Replace 'mySelect' with the actual ID of your select box
 
   // Clear existing options
   selectBox.innerHTML = '';
-
+    var firstOptions = [];
+    var secondOptions = [];
   // Iterate over the map and create options
   for (const [key, value] of optionsMap) {
     const option = document.createElement('option');
     option.value = key;
     option.text = value;
-    selectBox.appendChild(option);
+    firstOptions.push(option);
     const option2 = document.createElement('option');
     option2.value = key;
     option2.text = value;
+    secondOptions.push(option2);
+  }
+  var sorter = function (a, b) {
+    return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+};
+firstOptions.sort(sorter);
+secondOptions.sort(sorter);
+  for (option of firstOptions){
+    selectBox.appendChild(option);
+  }
+  for (option2 of secondOptions){
     selectBox2.appendChild(option2);
   }
 }
