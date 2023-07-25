@@ -85,7 +85,7 @@ function plz(){
 function displayRoute(route, even){
     routeString = ""
     if (route.prev  != null){
-        routeString = displayRoute(route.prev, !even)+"<br>"
+        routeString = displayRoute(route.prev, !even)+"\n"
     }
     var style = "''";
     if (even) {
