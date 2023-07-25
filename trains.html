@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body>
-This tool shows which stations are passed when going from one station to another in the Netherlands, and what distance this route would be.<br>
-It purely looks at distances, not at travel times.
 
-<h2>Input</h2>
+
 
     <table >
         <tbody><tr><td>From</td><td><select id="fromStation"></select></td></tr>
         <tr><td>To </td><td><select id="toStation"></select></td></tr>
         <tr><td colspan="2"><button onclick="plz()">Play</button></td></tr>
     </tbody></table>
-    <h2>Route</h2>
     <table name="results" id="results" class="results" >
         
     </table>
-    
+    This tool shows which stations are passed when going from one station to another in the Netherlands, and what distance this route would be.<br>
+It purely looks at distances, not at travel times.
     <script>
 function compare( a, b ) {
   if ( a.distance < b.distance ){
