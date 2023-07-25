@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body>
-    <table>
+This tool shows which stations are passed when going from one station to another in the Netherlands, and what distance this route would be.<br>
+It purely looks at distances, not at travel times.
+
+<h2>Input</h2>
+
+    <table >
         <tbody><tr><td>From</td><td><select id="fromStation"></select></td></tr>
         <tr><td>To </td><td><select id="toStation"></select></td></tr>
         <tr><td colspan="2"><button onclick="plz()">Play</button></td></tr>
     </tbody></table>
-    <h2>Results</h2>
-    <table id="results">
+    <h2>Route</h2>
+    <table name="results" id="results" class="results" >
         
     </table>
     
@@ -55,6 +60,7 @@ function plz(){
     
     var routes =  getNext(fromStation, 0, null)
     var visited = {}
+    var even = false
     while (true) {
         routes.sort(compare);
         const firstElement = routes.shift();
@@ -63,13 +69,13 @@ function plz(){
         }
 
         if (firstElement.toStation == toStation){
-            val =displayRoute(firstElement);
+            val =displayRoute(firstElement, even);
             var results = document.getElementById('results')
             results.innerHTML=val;
             return
         }
         if (!visited[firstElement.toStation]){
-            
+
             nexts = getNext(firstElement.toStation, firstElement["distance"], firstElement);
             for (route of nexts){
                 routes.push(route);
@@ -78,12 +84,16 @@ function plz(){
         }
     }
 }
-function displayRoute(route){
+function displayRoute(route, even){
     routeString = ""
     if (route.prev  != null){
-        routeString = displayRoute(route.prev)+"<br>"
+        routeString = displayRoute(route.prev, !even)+"<br>"
     }
-    return routeString + "<tr><td>"+stationMap[route.fromStation]+ "</td><td>" + stationMap[route.toStation]+"</td><td>"+ route.distance+"</td></tr>"
+    var style = "''";
+    if (even) {
+        style = "'background-color: #f2f2f2;'"
+    }
+    return routeString + "<tr style = "+style+"><td>"+stationMap[route.fromStation]+ "</td><td>" + stationMap[route.toStation]+"</td><td>"+ route.distance/10+" km</td></tr>"
 }
 
 function populateSelectBox(optionsMap) {
